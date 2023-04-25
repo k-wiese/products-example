@@ -5,6 +5,15 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-sm-10 text-light">
+          @if ($errors->any())
+              <div class="alert alert-danger">
+                  <ul>
+                      @foreach ($errors->all() as $error)
+                          <li>{{ $error }}</li>
+                      @endforeach
+                  </ul>
+              </div>
+          @endif
           <hr class="mb-5 text-light">
           <form action="{{route('product.index')}}" method="GET" class="form-inline">
           <div class="row justify-content-center">

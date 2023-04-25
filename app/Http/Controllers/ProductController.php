@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\ProductService;
 
+use function PHPSTORM_META\map;
+
 class ProductController extends Controller
 {
     private $productService;
@@ -18,6 +20,12 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
+        $request->validate([
+            'sortBy'=>'in:name,id',
+            'hasPrice'=>'in:true,false',
+            'ascOrDesc'=>'in:asc,desc',
+            'qty'=>'min:1|max:1000|integer'
+        ]);
 
         if($request->query('sortBy') != null)
         {

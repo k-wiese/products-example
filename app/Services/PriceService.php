@@ -17,7 +17,7 @@ class PriceService
         return $price;
     }
 
-    public function update($id, $value)
+    public function update($id, $value):void
     {
  
         $price = Price::findOrFail($id);
