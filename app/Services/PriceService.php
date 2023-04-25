@@ -6,11 +6,6 @@ use App\Models\Price;
 
 class PriceService
 {
-    public function __construct()
-    {
-
-    }
-
     public function create($product_id, $price):Price
     {
         $price = new Price([
@@ -19,8 +14,18 @@ class PriceService
         ]);
 
         $price->save();
-
         return $price;
+    }
+
+    public function update($id, $value)
+    {
+ 
+        $price = Price::findOrFail($id);
+
+        $price->update([
+            'price' => $value
+        ]);
+        $price->save();
     }
 
     public function delete($id):void

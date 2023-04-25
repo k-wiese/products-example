@@ -8,7 +8,6 @@ use App\Services\PriceService;
 
 class ProductService
 {
-
     public function create($name, $description):Product
     {
         $product = new Product([
@@ -26,9 +25,38 @@ class ProductService
         return Product::get();
     }
 
+    public function getAllWithPrices()
+    {
+        $products = Product::get();
+        foreach($products as $product)
+        {
+            $product->push($product->prices);
+        }
+        return $products;
+    }
+
+    public function getAllWithPricesAndPagination($qty = 10)
+    {
+        $products = Product::paginate($qty);
+        foreach($products as $product)
+        {
+            $product->push($product->prices);
+        }
+        return $products;
+    }
+
     public function getById($id):Product
     {
         return Product::findOrFail($id);
+    }
+
+    public function getByIdWithPrices($id):Product
+    {
+        $product = Product::findOrFail($id);
+
+        $product->push($product->prices);
+
+        return $product;
     }
 
     public function deleteWithPrices($id):void
@@ -52,4 +80,31 @@ class ProductService
         Product::destroy($id);
     }
 
+    public function update($id, $name = null, $description = null)
+    {
+        $product = Product::findOrFail($id);
+
+        $dataToUpdate = [];
+
+        if (!is_null($name)) 
+        {
+            $dataToUpdate['name'] = $name;
+        }
+        else 
+        {
+            $dataToUpdate['name'] = $product->name;
+        }
+
+        if (!is_null($description)) 
+        {
+            $dataToUpdate['description'] = $description;
+        } else 
+        {
+            $dataToUpdate['description'] = $product->description;
+        }
+
+        $product->update($dataToUpdate);
+
+        $product->save();
+    }
 }
