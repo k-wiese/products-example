@@ -120,6 +120,8 @@ class ProductService
 
     public function delete($id):void
     {
+        Product::findOrFail($id);
+
         Product::destroy($id);
     }
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PriceController;
 
+use App\Models\Product;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +20,6 @@ use App\Http\Controllers\PriceController;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-
 
 Route::middleware('auth')->group(function () {
     
