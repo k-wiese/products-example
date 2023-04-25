@@ -18,7 +18,35 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        
+
+        if($request->query('sortBy') != null)
+        {
+            $sortBy = $request->query('sortBy');
+        }
+        else
+        {
+            $sortBy = 'id';
+        }
+    
+
+        if($request->query('hasPrice') != null)
+        {
+            $hasPrice = $request->query('hasPrice');
+        }
+        else
+        {
+            $hasPrice = false;
+        }
+
+        if($request->query('ascOrDesc') != null)
+        {
+            $ascOrDesc = $request->query('ascOrDesc');
+        }
+        else
+        {
+            $ascOrDesc = 'asc';
+        }
+
         if($request->query('qty') != null)
         {
             $qty = intval($request->query('qty'));
@@ -28,8 +56,8 @@ class ProductController extends Controller
             $qty = 15;
         }
 
+        $products = $this->productService->getAllWithPricesAndSorting($sortBy, $hasPrice, $ascOrDesc, $qty);
         
-        $products = $this->productService->getAllWithPricesAndPagination($qty);
         return view('product.index', compact('products'));
     }
 

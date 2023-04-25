@@ -16,7 +16,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        $products = $this->productService->getAllWithPricesAndPagination(12);
+        $products = $this->productService->getAllWithPricesAndSorting('name',true,'asc',15);
         return view('index', compact('products'));
     }
 }

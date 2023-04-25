@@ -35,9 +35,52 @@ class ProductService
         return $products;
     }
 
-    public function getAllWithPricesAndPagination($qty = 10)
+    public function getAllWithPricesAndSorting($sortBy = 'id', $hasPrice, $ascOrDesc = 'asc', $qty = 15)
     {
-        $products = Product::paginate($qty);
+        $products = Product::query();
+
+
+        if ($hasPrice) 
+        {
+            $products = $products->has('prices');
+        } 
+        else 
+        {
+            $products = $products->doesntHave('prices');
+        }
+
+        switch($sortBy)
+        {
+            case 'name':
+
+                if($ascOrDesc === 'asc')
+                {
+                    $products = $products->orderBy('name');
+                }
+                else
+                {
+                    $products = $products->orderByDesc('name');
+                }
+
+                break;
+
+            case 'id':
+
+                if($ascOrDesc === 'asc')
+                {
+                    $products = $products->orderBy('id');
+                }
+                else
+                {
+                    $products = $products->orderByDesc('id');
+                }
+
+                break;
+        }
+
+
+
+        $products = $products->paginate($qty);
         foreach($products as $product)
         {
             $product->push($product->prices);

@@ -28,7 +28,7 @@ Route::middleware('auth')->group(function () {
     });
     
     Route::resource('/product', ProductController::class);
-    route::resource('/price', PriceController::class);
+    Route::resource('/price', PriceController::class);
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

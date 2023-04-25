@@ -3,7 +3,72 @@
 @section('content')
     
     <div class="container">
-        <div class="row">
+      <div class="row justify-content-center">
+        <div class="col-sm-10 text-light">
+          <hr class="mb-5 text-light">
+          <form action="{{route('product.index')}}" method="GET" class="form-inline">
+          <div class="row justify-content-center">
+
+            <div class="col-3">
+              <p>Sort by</p>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="sortBy" id="sortBy1" @if(isset($_GET['sortBy']) and $_GET['sortBy'] ==='name')checked @endif  value="name">
+                <label class="form-check-label" for="sortBy1">
+                  Name
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="sortBy" id="sortBy2" @if(isset($_GET['sortBy']) and $_GET['sortBy'] ==='id')checked @endif @if(!isset($_GET['sortBy']))checked @endif value="id">
+                <label class="form-check-label" for="sortBy2">
+                  ID
+                </label>
+              </div>
+            </div>
+            <div class="col-3">
+              <p>Ascending or Descending</p>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="ascOrDesc" id="ascOrDesc1" @if(isset($_GET['ascOrDesc']) and $_GET['ascOrDesc'] ==='asc')checked @endif @if(!isset($_GET['ascOrDesc']))checked @endif value="asc">
+                <label class="form-check-label" for="ascOrDesc1">
+                  Ascending
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="ascOrDesc" id="ascOrDesc2" @if(isset($_GET['ascOrDesc']) and $_GET['ascOrDesc'] ==='desc')checked @endif  value="desc">
+                <label class="form-check-label" for="ascOrDesc2">
+                  Descending
+                </label>
+              </div>
+            </div>
+            <div class="col-3">
+   
+              <p>Filter by</p>
+              <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" role="switch" id="hasPrice" @if(isset($_GET['hasPrice']) and $_GET['hasPrice'] !== false) checked @endif name="hasPrice" value="true">
+              <label class="form-check-label" for="hasPrice">Has price</label>
+            </div>
+            </div>
+
+            <div class="col-3">
+              <p>Per page</p>
+              <div class="input-group mb-3">
+                <input type="number" class="form-control" @isset($_GET['qty']) value="{{$_GET['qty']}}"@else value="15" @endisset name="qty">
+              </div>
+            </div>
+
+            <div class="mt-3 mb-5 col-12">
+              <button class="btn btn-outline-light d-block w-100">Apply</button>
+              
+            </div>
+          </div>
+        </form>
+      
+ 
+    
+        <hr class="mb-4 text-light">
+        </div>
+      </div>
+
+        <div class="row justify-content-center">
             <div class="col-sm-10">
 
               @if(session('message'))
@@ -27,7 +92,7 @@
 
                     @foreach($products as $product)
                       <tr>
-                        <th scope="row">{{$product->id}}</th>
+                        <th scope="row justify-content-center">{{$product->id}}</th>
                         <td>
                           <a href="{{route('product.show', $product)}}">
                             {{$product->name}}
