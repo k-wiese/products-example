@@ -71,6 +71,12 @@
         <div class="row justify-content-center">
             <div class="col-sm-10">
 
+              <div class="my-3">
+                <a href="{{route('product.create')}}">
+                <button class="btn btn-light">Add new product</button>
+              </a>
+              </div>
+
               @if(session('message'))
                 <div class="alert alert-success text-center">
                     {{ session('message') }}
