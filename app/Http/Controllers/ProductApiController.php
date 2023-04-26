@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\ProductService;
-use Illuminate\Http\Response;
 use App\Services\PriceService;
 
 class ProductApiController extends Controller
@@ -18,7 +17,7 @@ class ProductApiController extends Controller
         $this->priceService = $priceService;
     }
 
-    public function index():Response
+    public function index()
     {
         $products = $this->productService->getAllWithPrices();
 
@@ -26,7 +25,7 @@ class ProductApiController extends Controller
             ->header('Content-Type', 'application/json');
     }
 
-    public function create(Request $request):Response
+    public function create(Request $request)
     {
         $request->validate([
             'name' => 'required|max:30',
@@ -51,7 +50,7 @@ class ProductApiController extends Controller
         ->header('Content-Type', 'text/plain');
     }
 
-    public function update(Request $request, $id):Response
+    public function update(Request $request, $id)
     {
         $request->validate([
             'name' => 'max:30',
@@ -83,7 +82,7 @@ class ProductApiController extends Controller
         ->header('Content-Type', 'text/plain');
     }
 
-    public function show(string $id):Response
+    public function show(string $id)
     {
         if (!is_numeric($id)) 
         {
@@ -98,7 +97,7 @@ class ProductApiController extends Controller
 
     }
 
-    public function delete(string $id):Response
+    public function delete(string $id)
     {
         
         $this->productService->delete($id);
@@ -106,7 +105,7 @@ class ProductApiController extends Controller
         return response('Successully deleted product', 200)
             ->header('Content-Type', 'text/plain');
     }
-    public function deleteWithPrices(string $id):Response
+    public function deleteWithPrices(string $id)
     {
         $this->productService->deleteWithPrices($id);
 

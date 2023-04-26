@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Models\Product;
 use App\Services\PriceService;
-
+use Illuminate\Database\Eloquent\Collection;
 
 class ProductService
 {
@@ -20,12 +20,12 @@ class ProductService
         return $product;
     }
 
-    public function getAll()
+    public function getAll():Collection
     {
         return Product::get();
     }
 
-    public function getAllWithPrices()
+    public function getAllWithPrices():Collection
     {
         $products = Product::get();
         foreach($products as $product)
@@ -35,7 +35,7 @@ class ProductService
         return $products;
     }
 
-    public function getAllWithPricesAndSorting($sortBy = 'id', $hasPrice, $ascOrDesc = 'asc', $qty = 15)
+    public function getAllWithPricesAndSorting($sortBy = 'id', $hasPrice = false, $ascOrDesc = 'asc', $qty = 15)
     {
         $products = Product::query();
 
@@ -44,10 +44,6 @@ class ProductService
         {
             $products = $products->has('prices');
         } 
-        else 
-        {
-            $products = $products->doesntHave('prices');
-        }
 
         switch($sortBy)
         {
@@ -78,13 +74,13 @@ class ProductService
                 break;
         }
 
-
-
         $products = $products->paginate($qty)->appends(request()->query());
+
         foreach($products as $product)
         {
             $product->push($product->prices);
         }
+
         return $products;
     }
 
@@ -125,31 +121,20 @@ class ProductService
         Product::destroy($id);
     }
 
-    public function update($id, $name = null, $description = null)
+    public function update($id, $name = null, $description = null):Product
     {
         $product = Product::findOrFail($id);
 
         $dataToUpdate = [];
 
-        if (!is_null($name)) 
-        {
-            $dataToUpdate['name'] = $name;
-        }
-        else 
-        {
-            $dataToUpdate['name'] = $product->name;
-        }
+        $dataToUpdate['name'] = !is_null($name)? $name : $product->name;
 
-        if (!is_null($description)) 
-        {
-            $dataToUpdate['description'] = $description;
-        } else 
-        {
-            $dataToUpdate['description'] = $product->description;
-        }
+        $dataToUpdate['description'] = !is_null($description)? $description : $product->description;
 
         $product->update($dataToUpdate);
 
         $product->save();
+
+        return $product;
     }
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PriceController;
 
 use App\Services\PriceService;
+use App\Services\ProductService;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,11 +24,13 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/test', function (){
     
-    $priceService = new PriceService;
-    $price =  $priceService->create(25,200);
+    $productService = new ProductService;
+    $products = $productService->getAll();
 
-    $priceService->update($price->id,600);
-    dd($price);
+    foreach($products as $product)
+    {
+        dd($product);
+    }
 });
 
 Route::middleware('auth')->group(function () {

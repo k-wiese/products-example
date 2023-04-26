@@ -2,7 +2,7 @@
 
 namespace App\Services;
 use App\Models\Price;
-
+use Illuminate\Database\Eloquent\Collection;
 
 class PriceService
 {
@@ -27,7 +27,7 @@ class PriceService
         return $price;
     }
 
-    public function delete($id)
+    public function delete($id):void
     {
         Price::findOrFail($id);
         Price::destroy($id);
@@ -38,12 +38,12 @@ class PriceService
        return Price::findOrFail($id);
     }
 
-    public function getAll()
+    public function getAll():Collection
     {
        return Price::get();
     }
 
-    public function getByProductId($id)
+    public function getByProductId($id):Collection
     {
         $productService = new ProductService;
         return $productService->getById($id)->prices;
