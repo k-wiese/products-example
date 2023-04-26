@@ -17,15 +17,14 @@ class PriceService
         return $price;
     }
 
-    public function update($id, $value):void
+    public function update($id, $value):Price
     {
- 
         $price = Price::findOrFail($id);
 
-        $price->update([
-            'price' => $value
-        ]);
+        $price->price = $value;
         $price->save();
+
+        return $price;
     }
 
     public function delete($id):void
