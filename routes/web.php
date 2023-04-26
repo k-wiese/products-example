@@ -25,7 +25,7 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/dashboard', function(){
         return redirect()->route('home');
-    });
+    })->name('dashboard');
     
     Route::resource('/product', ProductController::class);
     Route::resource('/price', PriceController::class);
