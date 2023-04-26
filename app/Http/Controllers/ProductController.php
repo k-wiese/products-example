@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Services\ProductService;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -17,10 +17,10 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $request->validate([
-            'sortBy'=>'in:name,id',
-            'hasPrice'=>'in:true,false',
-            'ascOrDesc'=>'in:asc,desc',
-            'qty'=>'min:1|max:1000|integer'
+            'sortBy' => 'in:name,id',
+            'hasPrice' => 'in:true,false',
+            'ascOrDesc' => 'in:asc,desc',
+            'qty' => 'min:1|max:1000|integer',
         ]);
 
         $products = $this->productService->getAllWithPricesAndSorting($request->sortBy, $request->hasPrice, $request->ascOrDesc, $request->qty);
@@ -36,13 +36,14 @@ class ProductController extends Controller
     public function show(string $id)
     {
         $product = $this->productService->getByIdWithPrices($id);
+
         return view('product.show', compact('product'));
     }
-
 
     public function edit(string $id)
     {
         $product = $this->productService->getByIdWithPrices($id);
+
         return view('product.edit', compact('product'));
     }
 
@@ -55,14 +56,15 @@ class ProductController extends Controller
             'description' => 'max:100',
         ]);
 
-        $this->productService->update($product->id,$request->name, $request->description);
+        $this->productService->update($id, $request->name, $request->description);
 
-        return redirect()->route('product.edit', $product)->with('message-product','Product updated successfully');
+        return redirect()->route('product.edit', $product)->with('message-product', 'Product updated successfully');
     }
 
     public function destroy(string $id)
     {
         $this->productService->deleteWithPrices($id);
-        return redirect()->route('product.index')->with('message','Product deleted successfully');
+
+        return redirect()->route('product.index')->with('message', 'Product deleted successfully');
     }
 }

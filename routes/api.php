@@ -1,11 +1,10 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductApiController;
 use App\Http\Controllers\ApiAuthController;
 use App\Http\Controllers\PriceApiController;
-
+use App\Http\Controllers\ProductApiController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -17,7 +16,7 @@ Route::get('/products/{id}', [ProductApiController::class, 'show'])->name('produ
 Route::get('/prices', [PriceApiController::class, 'index'])->name('price.index');
 Route::get('/prices/{id}', [PriceApiController::class, 'show'])->name('price.show');
 
-Route::post('/authenticate',[ApiAuthController::class, 'authenticate'])->name('api.auth');
+Route::post('/authenticate', [ApiAuthController::class, 'authenticate'])->name('api.auth');
 
 Route::middleware('jwt.auth')->group(function () {
 
@@ -36,5 +35,3 @@ Route::middleware('jwt.auth')->group(function () {
     Route::delete('/prices/{id}/delete', [PriceApiController::class, 'destroy'])->name('price.delete');
 
 });
-
-

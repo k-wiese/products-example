@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Services\ProductService;
 use App\Services\PriceService;
+use App\Services\ProductService;
+use Illuminate\Http\Request;
 
 class ProductApiController extends Controller
 {
     private $productService;
+
     private $priceService;
 
     public function __construct(ProductService $productService, PriceService $priceService)
@@ -35,10 +36,8 @@ class ProductApiController extends Controller
 
         $product = $this->productService->create($bodyContent->name, $bodyContent->description);
 
-        if(isset($bodyContent->prices))
-        {
-            foreach($bodyContent->prices as $price)
-            {
+        if (isset($bodyContent->prices)) {
+            foreach ($bodyContent->prices as $price) {
                 $this->priceService->create($product->id, $price);
             }
 
@@ -47,7 +46,7 @@ class ProductApiController extends Controller
         }
 
         return response('Product added succesfully to the database without prices', 200)
-        ->header('Content-Type', 'text/plain');
+            ->header('Content-Type', 'text/plain');
     }
 
     public function update(Request $request, $id)
@@ -58,34 +57,27 @@ class ProductApiController extends Controller
         ]);
         $bodyContent = json_decode($request->getContent());
 
-        if(isset($bodyContent->name))
-        {
+        if (isset($bodyContent->name)) {
             $name = $bodyContent->name;
-        }
-        else
-        {
+        } else {
             $name = null;
         }
-        if(isset($bodyContent->description))
-        {
+        if (isset($bodyContent->description)) {
             $description = $bodyContent->description;
 
-        }
-        else
-        {
+        } else {
             $description = null;
         }
 
-        $this->productService->update($id,$name, $description);
+        $this->productService->update($id, $name, $description);
 
         return response('Product sucessfully updated', 200)
-        ->header('Content-Type', 'text/plain');
+            ->header('Content-Type', 'text/plain');
     }
 
     public function show(string $id)
     {
-        if (!is_numeric($id)) 
-        {
+        if (! is_numeric($id)) {
             return response('Error - Invalid ID', 400)
                 ->header('Content-Type', 'text/plain');
         }
@@ -99,12 +91,13 @@ class ProductApiController extends Controller
 
     public function delete(string $id)
     {
-        
+
         $this->productService->delete($id);
 
         return response('Successully deleted product', 200)
             ->header('Content-Type', 'text/plain');
     }
+
     public function deleteWithPrices(string $id)
     {
         $this->productService->deleteWithPrices($id);
@@ -112,7 +105,4 @@ class ProductApiController extends Controller
         return response('Successully deleted product with its prices', 200)
             ->header('Content-Type', 'text/plain');
     }
-
-
-
 }

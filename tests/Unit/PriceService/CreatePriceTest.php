@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\PriceService;
 
-use Tests\TestCase;
 use App\Services\PriceService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class CreatePriceTest extends TestCase
 {
@@ -20,7 +20,7 @@ class CreatePriceTest extends TestCase
         $price = $priceService->create($product_id, $priceValue);
 
         $this->assertDatabaseHas('prices', [
-            'id' =>$price->id,
+            'id' => $price->id,
             'product_id' => $product_id,
             'price' => $priceValue,
         ]);

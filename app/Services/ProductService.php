@@ -3,16 +3,14 @@
 namespace App\Services;
 
 use App\Models\Product;
-use App\Services\PriceService;
-use Illuminate\Database\Eloquent\Collection;
 
 class ProductService
 {
-    public function create($name, $description):Product
+    public function create($name, $description): Product
     {
         $product = new Product([
-            'name'=> $name,
-            'description'=> $description
+            'name' => $name,
+            'description' => $description,
         ]);
 
         $product->save();
@@ -20,18 +18,18 @@ class ProductService
         return $product;
     }
 
-    public function getAll():Collection
+    public function getAll()
     {
         return Product::get();
     }
 
-    public function getAllWithPrices():Collection
+    public function getAllWithPrices()
     {
         $products = Product::get();
-        foreach($products as $product)
-        {
+        foreach ($products as $product) {
             $product->push($product->prices);
         }
+
         return $products;
     }
 
@@ -39,22 +37,16 @@ class ProductService
     {
         $products = Product::query();
 
-
-        if ($hasPrice) 
-        {
+        if ($hasPrice) {
             $products = $products->has('prices');
-        } 
+        }
 
-        switch($sortBy)
-        {
+        switch ($sortBy) {
             case 'name':
 
-                if($ascOrDesc === 'asc')
-                {
+                if ($ascOrDesc === 'asc') {
                     $products = $products->orderBy('name');
-                }
-                else
-                {
+                } else {
                     $products = $products->orderByDesc('name');
                 }
 
@@ -62,12 +54,9 @@ class ProductService
 
             case 'id':
 
-                if($ascOrDesc === 'asc')
-                {
+                if ($ascOrDesc === 'asc') {
                     $products = $products->orderBy('id');
-                }
-                else
-                {
+                } else {
                     $products = $products->orderByDesc('id');
                 }
 
@@ -76,20 +65,19 @@ class ProductService
 
         $products = $products->paginate($qty)->appends(request()->query());
 
-        foreach($products as $product)
-        {
+        foreach ($products as $product) {
             $product->push($product->prices);
         }
 
         return $products;
     }
 
-    public function getById($id):Product
+    public function getById($id): Product
     {
         return Product::findOrFail($id);
     }
 
-    public function getByIdWithPrices($id):Product
+    public function getByIdWithPrices($id): Product
     {
         $product = Product::findOrFail($id);
 
@@ -98,38 +86,36 @@ class ProductService
         return $product;
     }
 
-    public function deleteWithPrices($id):void
+    public function deleteWithPrices($id): void
     {
         $product = Product::findOrFail($id);
 
-        if($product->prices->count() > 0)
-        {
+        if ($product->prices->count() > 0) {
             $priceService = new PriceService;
 
-            foreach($product->prices as $price)
-            {
+            foreach ($product->prices as $price) {
                 $priceService->delete($price->id);
             }
         }
         Product::destroy($id);
     }
 
-    public function delete($id):void
+    public function delete($id): void
     {
         Product::findOrFail($id);
 
         Product::destroy($id);
     }
 
-    public function update($id, $name = null, $description = null):Product
+    public function update($id, $name = null, $description = null): Product
     {
         $product = Product::findOrFail($id);
 
         $dataToUpdate = [];
 
-        $dataToUpdate['name'] = !is_null($name)? $name : $product->name;
+        $dataToUpdate['name'] = ! is_null($name) ? $name : $product->name;
 
-        $dataToUpdate['description'] = !is_null($description)? $description : $product->description;
+        $dataToUpdate['description'] = ! is_null($description) ? $description : $product->description;
 
         $product->update($dataToUpdate);
 

@@ -17,8 +17,8 @@ class PriceFactory extends Factory
     public function definition(): array
     {
         return [
-            'product_id' => rand(1,150),
-            'price'=> rand(15,8000)
+            'product_id' => rand(1, 150),
+            'price' => rand(15, 8000),
         ];
     }
 }

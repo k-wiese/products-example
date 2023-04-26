@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\ProductService;
 
-use Tests\TestCase;
 use App\Models\Product;
 use App\Services\ProductService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class GetAllProductTest extends TestCase
 {
@@ -20,8 +20,7 @@ class GetAllProductTest extends TestCase
 
         $this->assertEquals($allProducts->count(), 3);
 
-        foreach ($products as $product) 
-        {
+        foreach ($products as $product) {
             $this->assertContains($product->name, $allProducts->pluck('name'));
             $this->assertContains($product->description, $allProducts->pluck('description'));
         }

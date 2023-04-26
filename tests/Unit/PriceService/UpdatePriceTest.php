@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\PriceService;
 
-use Tests\TestCase;
 use App\Services\PriceService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class UpdatePriceTest extends TestCase
 {
@@ -12,18 +12,15 @@ class UpdatePriceTest extends TestCase
 
     public function testUpdatePrice()
     {
-        
+
         $priceService = new PriceService;
         $price = $priceService->create(5, 200);
 
         $price = $priceService->update($price->id, 500);
 
-        if($price->price === 500)
-        {
+        if ($price->price === 500) {
             $result = true;
-        }
-        else
-        {
+        } else {
             $result = false;
         }
 

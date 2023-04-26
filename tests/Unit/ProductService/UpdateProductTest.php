@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\ProductService;
 
-use Tests\TestCase;
 use App\Models\Product;
 use App\Services\ProductService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class UpdateProductTest extends TestCase
 {
@@ -19,10 +19,8 @@ class UpdateProductTest extends TestCase
         $name = 'Updated product name';
         $description = 'Updated product description';
 
-   
         $productService->update($product->id, $name, $description);
 
-        
         $this->assertDatabaseHas('products', [
             'id' => $product->id,
             'name' => $name,

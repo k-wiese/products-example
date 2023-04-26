@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\ProductService;
 
-use Tests\TestCase;
 use App\Models\Product;
 use App\Services\ProductService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class DeleteProductTest extends TestCase
 {

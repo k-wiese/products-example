@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\PriceService;
 
-use Tests\TestCase;
-use App\Services\PriceService;
 use App\Models\Price;
+use App\Services\PriceService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class GetPriceByIdTest extends TestCase
 {
@@ -22,12 +22,9 @@ class GetPriceByIdTest extends TestCase
         $priceFromService = $priceService->getById($id);
         $priceFromEloquent = Price::findOrFail($id);
 
-        if($priceFromService->id === $priceFromEloquent->id)
-        {
+        if ($priceFromService->id === $priceFromEloquent->id) {
             $result = true;
-        }
-        else
-        {
+        } else {
             $result = false;
         }
 

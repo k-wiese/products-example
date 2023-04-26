@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Services\PriceService;
+use Illuminate\Http\Request;
 
 class PriceApiController extends Controller
 {
@@ -49,9 +49,9 @@ class PriceApiController extends Controller
     public function destroy(string $id)
     {
         $this->priceService->delete($id);
-        
+
         return response('Successfully deleted price', 200)
-        ->header('Content-Type', 'text/plain');
-        
+            ->header('Content-Type', 'text/plain');
+
     }
 }

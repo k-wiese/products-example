@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Services\ProductService;
-
 
 class HomeController extends Controller
 {
@@ -17,7 +15,8 @@ class HomeController extends Controller
 
     public function index()
     {
-        $products = $this->productService->getAllWithPricesAndSorting('name',true,'asc',15);
+        $products = $this->productService->getAllWithPricesAndSorting('name', true, 'asc', 15);
+
         return view('index', compact('products'));
     }
 }

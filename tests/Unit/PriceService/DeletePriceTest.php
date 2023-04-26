@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\PriceService;
 
-use Tests\TestCase;
-use App\Services\PriceService;
 use App\Models\Price;
+use App\Services\PriceService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class DeletePriceTest extends TestCase
 {

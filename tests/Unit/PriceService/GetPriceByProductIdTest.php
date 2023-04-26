@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\PriceService;
 
-use Tests\TestCase;
-use App\Services\PriceService;
 use App\Models\Product;
+use App\Services\PriceService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class GetPriceByProductIdTest extends TestCase
 {
@@ -13,7 +13,7 @@ class GetPriceByProductIdTest extends TestCase
 
     public function testGetPriceByProductId()
     {
-        
+
         $priceService = new PriceService();
         $product = Product::factory()->create();
 
@@ -21,12 +21,9 @@ class GetPriceByProductIdTest extends TestCase
 
         $prices = $priceService->getByProductId($product->id);
 
-        if($prices->first()->id === $price->id)
-        {
+        if ($prices->first()->id === $price->id) {
             $result = true;
-        }
-        else
-        {
+        } else {
             $result = false;
         }
 

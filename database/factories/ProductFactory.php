@@ -21,5 +21,4 @@ class ProductFactory extends Factory
             'description' => 'This is example description for example product',
         ];
     }
-
 }

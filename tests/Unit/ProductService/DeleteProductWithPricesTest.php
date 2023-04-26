@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\ProductService;
 
-use Tests\TestCase;
 use App\Models\Product;
-use App\Services\ProductService;
 use App\Services\PriceService;
+use App\Services\ProductService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class DeleteProductWithPricesTest extends TestCase
 {
@@ -20,14 +20,11 @@ class DeleteProductWithPricesTest extends TestCase
 
         $priceService = new PriceService();
 
-        $price = $priceService->create($product->id,200);
+        $price = $priceService->create($product->id, 200);
 
-        if($product->prices->count() === 1)
-        {
+        if ($product->prices->count() === 1) {
             $result = true;
-        }
-        else
-        {
+        } else {
             $result = false;
         }
 
