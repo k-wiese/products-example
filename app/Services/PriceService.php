@@ -27,14 +27,20 @@ class PriceService
         return $price;
     }
 
-    public function delete($id):void
+    public function delete($id)
     {
+        Price::findOrFail($id);
         Price::destroy($id);
     }
 
     public function getById($id):Price
     {
        return Price::findOrFail($id);
+    }
+
+    public function getAll()
+    {
+       return Price::get();
     }
 
     public function getByProductId($id)

@@ -80,7 +80,7 @@ class ProductService
 
 
 
-        $products = $products->paginate($qty);
+        $products = $products->paginate($qty)->appends(request()->query());
         foreach($products as $product)
         {
             $product->push($product->prices);

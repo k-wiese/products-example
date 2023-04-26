@@ -1,4 +1,9 @@
 <div>
+        @if(isset($message))
+        <div class="alert alert-success my-3 text-center">
+            {{$message}}
+        </div>
+        @endif
     
         <div class="input-group mb-3">
           

@@ -12,6 +12,7 @@ class ProductCreateForm extends Component
     public $priceInputs = [];
     public $name;
     public $description;
+    public $message;
     
     protected $rules = [
         'name' => 'max:30|required',
@@ -39,6 +40,8 @@ class ProductCreateForm extends Component
                 $priceService->create($product->id, $price);
             }
         }
+
+        $this->message = 'Successfully created product';
         
     }
     public function addPriceInput()
